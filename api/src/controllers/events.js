@@ -35,7 +35,7 @@ export async function getEvents(req, res, next) {
         const page = Math.max(Number(req.query.page ?? 0), 0);
         const offset = page * PAGE_SIZE;
 
-        const filters = {}; // future: map req.query filters here
+        const filters = {}; // TODO: map req.query filters here
 
         // Run queries in parallel for better performance
         const [data, totalItems] = await Promise.all([
