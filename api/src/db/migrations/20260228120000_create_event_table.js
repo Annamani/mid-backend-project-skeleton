@@ -3,7 +3,7 @@
  */
 export async function up(knex) {
     await knex.schema.createTable("event", (t) => {
-        t.integer("id").primary();
+        t.increments("id").primary();
         t.decimal("price", 10, 2).notNullable();
         t.string("currency", 3).notNullable();
         t.string("title").notNullable();
