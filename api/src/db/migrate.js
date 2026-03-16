@@ -1,3 +1,4 @@
+import "dotenv/config";
 import knex from "#configs/database.js";
 
 (async () => {
