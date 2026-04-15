@@ -26,6 +26,49 @@ This project uses modern JavaScript modules throughout the codebase.
 
 The goal is to keep the project structure and separation of concerns consistent while still allowing you to extend the implementation as your project grows.
 
+## Input validation
+
+Backend input validation is also expected in this project for request bodies, path params, and query params.
+
+This starter now includes [Zod](https://zod.dev/) as a simple schema-based example for input validation. It was chosen intentionally because the schema definitions stay compact, readable, and close to the actual data shape.
+
+The included examples live in `src/schemas/events.js` as named schemas for request input.
+
+- Use it as a reference if you want a schema-based approach
+- Zod schemas can validate and normalize input in one step with `.parse(...)`
+- If `.parse(...)` fails, Zod throws a `ZodError`, which this starter maps to a `400` JSON response
+- You may still use manual validation if that fits your learning process better
+- You may also choose a different validation library if you have a good reason
+
+The important part is that incoming input is validated before it is used by controllers or models.
+
+### Example
+
+```js
+import { EventInput, EventListQuery } from "#schemas/events.js";
+
+export async function postEvent(req, res, next) {
+    try {
+        const eventInput = EventInput.parse(req.body);
+        // continue with validated and normalized input
+    } catch (error) {
+        next(error);
+    }
+}
+```
+
+`EventInput.parse(req.body)` returns a validated object ready to use in the controller.
+
+For query params, the same pattern can be used:
+
+```js
+const { page, pageSize } = EventListQuery.parse(req.query);
+```
+
+If you prefer manual validation, the wiring is similar: parse the input near the start of the controller, throw a `400`-type error when a value is invalid, and pass only normalized values deeper into the model layer.
+
+For comparison, `src/schemas/events.js` also includes commented manual alternatives that throw on invalid input and return normalized values on success.
+
 ## Middleware placement
 
 This project uses middleware in more than one place, depending on what the middleware is supposed to do.

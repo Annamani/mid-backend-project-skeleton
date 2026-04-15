@@ -1,4 +1,10 @@
+import { ZodError } from "zod";
+
 function getErrorStatus(error) {
+    if (error instanceof ZodError) {
+        return 400;
+    }
+
     const status = Number(error?.status ?? error?.statusCode);
 
     if (Number.isInteger(status) && status >= 400 && status <= 599) {
@@ -22,9 +28,11 @@ export function apiErrorHandler(error, req, res, next) {
     const shouldExposeDetails = process.env.NODE_ENV !== "production";
     void next;
 
-    const message = !isServerError && error?.message
-        ? error.message
-        : "Internal server error";
+    const message = error instanceof ZodError
+        ? "Invalid request input"
+        : !isServerError && error?.message
+            ? error.message
+            : "Internal server error";
 
     const payload = {
         error: {
@@ -34,6 +42,13 @@ export function apiErrorHandler(error, req, res, next) {
 
     if (shouldExposeDetails && error?.message) {
         payload.error.details = error.message;
+    }
+
+    if (error instanceof ZodError) {
+        payload.error.issues = error.issues.map((issue) => ({
+            path: issue.path.join("."),
+            message: issue.message,
+        }));
     }
 
     if (shouldExposeDetails) {
