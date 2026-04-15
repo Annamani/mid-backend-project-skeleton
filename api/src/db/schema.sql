@@ -2,11 +2,12 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS events;
 -- USERS TABLE
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email text UNIQUE NOT NULL,
-    password TEXT NOT NULL,
+    id SERIAL PRIMARY KEY ,
+    email TEXT NOT NULL UNIQUE,
+    user_password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+select * from users;
 
 -- EVENTS TABLE 
 CREATE TABLE events (
@@ -19,3 +20,4 @@ CREATE TABLE events (
     available_tickets INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+select * from events;
