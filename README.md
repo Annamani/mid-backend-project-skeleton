@@ -21,12 +21,15 @@ Both packages are as small as possible, but feel free to add more tools and temp
 
 ### Setting up the Database
 
-This project template defaults to using an SQLite database, which is stored in a generated file in the api directory. It doesn't need a separate service to run. 
+For the Events Startup Project, PostgreSQL is the required database.
 
-If you wish to use MySQL instead, here's a quick way to get one set up and running using Docker: 
-`docker run --name mysql -e MYSQL_ROOT_PASSWORD=mysql-root-password -e MYSQL_DATABASE=my-database -d -p 3306:3306 mysql:latest`
+This repository started from a general template, so the API package includes SQLite, MySQL, and PostgreSQL clients. For this course project, you should configure and use PostgreSQL.
 
-Whichever database you set up, connect to it using any database management tool of your choice, such as MySQL Workbench or DBeaver, to create your tables and add data.
+Here is a quick way to start PostgreSQL locally with Docker:
+
+`docker run --name events-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=events_startup -d -p 5432:5432 postgres:16`
+
+After the container is running, you can connect to it using a database management tool such as DBeaver or pgAdmin.
 ![Testing your database](./images/db_test.png)
 
 ### Setting up the API
@@ -38,12 +41,27 @@ cd api
 cp .env-template .env
 ```
 
-Open your .env file and configure the options as appropriate. The first thing you need to do is comment out/in the correct section in Database Configuration, depending on the database you chose in the first step. Set the variables to the correct values based on your set up.
+Open your `.env` file and configure the options for PostgreSQL.
+
+For the course project, a local PostgreSQL `.env` will usually look like this:
+
+```env
+PORT=3001
+
+DB_CLIENT=pg
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_DATABASE_NAME=events_startup
+DB_USE_SSL=false
+```
 
 Then you're ready to start it up:
 
 ```
 npm install
+npm run db:setup
 npm run dev
 ```
 

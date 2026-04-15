@@ -1,6 +1,6 @@
 # The API package
 
-This package sets up a [Express](https://expressjs.com/) API server and a connection to a database (SQLite by default) using [Knex](https://knexjs.org/).
+This package sets up a [Express](https://expressjs.com/) API server and a connection to a database using [Knex](https://knexjs.org/).
 
 For development you can run the command `npm run dev` which uses `nodemon` to watch files and restarts the server when a change happens. You can find the API at [http://localhost:3001/api](http://localhost:3001/api). 
 
@@ -16,12 +16,29 @@ When you start a fresh project, check out `.env-template` to get started. Create
 
 ## Database clients
 
-The package comes installed with an SQLite, MySQL, and PostgreSQL client. Here's a quick suggestion for use cases:
-1. SQLite for quick, simple file-based storage
-2. MySQL for more advanced data storage (requires you to run a database service)
-3. PostgreSQL, similar to MySQL and used on our recommended hosting platform Render.com
+The package comes installed with SQLite, MySQL, and PostgreSQL clients because it is based on a shared template.
 
-You can decide which client to use by changing the `DB_CLIENT` environment variable. See `.env-template` for more info. 
+For the Events Startup Project, PostgreSQL is the required database. You should set `DB_CLIENT=pg` and configure the remaining PostgreSQL environment variables in your `.env` file.
+
+Example local PostgreSQL setup with Docker:
+
+`docker run --name events-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=events_startup -d -p 5432:5432 postgres:16`
+
+Example `.env` values for that setup:
+
+```env
+PORT=3001
+
+DB_CLIENT=pg
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_DATABASE_NAME=events_startup
+DB_USE_SSL=false
+```
+
+See `.env-template` for the full list of available configuration variables.
 
 ## Advanced database management
 
@@ -183,4 +200,3 @@ In the next screen you'll see the output of your build step which is downloading
 Once you see the text "Your service is live" you can test your API with Postman by using the deployed URL, which should be something like `https://hyf-template-api.onrender.com/api`. You should see the output the response from your "/" route.
 
 If you've got this far, you probably want to deploy your web app next. Head over to the README.md in your app directory for instructions.
-
