@@ -13,6 +13,12 @@ Both packages are as small as possible, but feel free to add more tools and temp
 
 ## Pre-requisites
 
+This repository is a starter, not a complete final-project implementation.
+
+- The overall structure is provided for you
+- As you build project-specific features, you may need to install additional dependencies and add new environment variables
+- Keep the project structure clear as you extend it, rather than trying to fit every new feature into the starter exactly as-is
+
 
 
 ## Getting started

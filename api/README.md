@@ -20,6 +20,11 @@ This project uses modern JavaScript modules throughout the codebase.
 
 - Use `import` / `export` syntax in project files
 - If you see older Node.js examples online using `require()` and `module.exports`, that is CommonJS syntax and not the style used in this repository
+- This skeleton intentionally includes only the dependencies and environment variables needed for the base starter setup
+- As you implement new features, you are expected to install additional packages and extend `.env` with any new variables you need
+- Common examples for auth work are `bcryptjs` for password hashing, `jsonwebtoken` for JWT handling, and a `JWT_SECRET` environment variable for signing tokens
+
+The goal is to keep the project structure and separation of concerns consistent while still allowing you to extend the implementation as your project grows.
 
 ## Middleware placement
 
