@@ -14,6 +14,24 @@ You can set environment variables in the `.env` file or in the Render.com enviro
 
 When you start a fresh project, check out `.env-template` to get started. Create a file called `.env` and copy the contents of the template as a starting point (or just run `cp .env-template .env`). You should comment in/out the sections you need, and add any additional configuration as necessary.
 
+## Scope clarifications
+
+This README explains how the starter API is structured. It does not replace the project contract, PRD, or weekly plan.
+
+- Some routes in the starter exist mainly as examples of controller/router/model structure
+- Placeholder admin-style CRUD routes are illustrative and may be optional depending on the course scope
+- Core project scope should still be taken from the program requirements and contract
+
+When designing your own database and API, a few practical conventions are worth keeping in mind:
+
+- Avoid reserved database table names such as `user` and `order`; use safer names if needed
+- Route params such as `itemId` should identify the record named by the route, for example a cart line item rather than a catalog event
+- If the project contract specifies a route shape, follow that contract even if another route design could also work
+
+Design hint:
+
+If your cart API uses a route such as `/api/cart/items/{itemId}`, that usually implies a single unique identifier for the cart line item itself. If your database instead identifies a cart line by a composite key such as `(cart_id, line_no)`, the route shape would typically need to reflect that design as well, for example `/api/carts/{cartId}/lines/{lineNo}`.
+
 ## Important for trainees
 
 This project uses modern JavaScript modules throughout the codebase.

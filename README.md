@@ -25,6 +25,14 @@ This repository is a starter, not a complete final-project implementation.
 
 > Before you start, make sure no other projects are running, in order to have the required ports free.
 
+## Project scope notes
+
+This repository is a starter for the Events Startup Project, not the full project specification.
+
+- Course requirements, weekly scope, and endpoint contracts should still be taken from the program documents
+- The starter includes some illustrative placeholder routes and example structures that are meant to show patterns, not to redefine the assignment
+- If the starter and the project contract seem to differ, prefer the project contract and update the starter code accordingly
+
 ### Setting up the Database
 
 For the Events Startup Project, PostgreSQL is the required database.
