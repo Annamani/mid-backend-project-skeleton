@@ -57,6 +57,24 @@ This project includes helper scripts for running Knex migrations and seeds:
 - `npm run db:migrate` – runs all pending migrations
 - `npm run db:seed` – runs all seed files
 - `npm run db:setup` – runs migrations and then seeds (fresh setup)
+- `npm run db:migrate:make <name>` – creates a new migration file using the standard Knex CLI
+- `npm run db:seed:make <name>` – creates a new seed file using the standard Knex CLI
+
+You can use either the npm scripts above or the Knex CLI directly from inside the `api` directory.
+
+Example:
+
+```bash
+npm run db:migrate:make create_user_table
+```
+
+Direct Knex CLI example:
+
+```bash
+npx knex migrate:make create_user_table
+```
+
+Both commands create a timestamped migration file in `src/db/migrations`.
 
 The `db:setup` command is useful when:
 
