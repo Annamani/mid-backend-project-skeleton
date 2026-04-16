@@ -32,7 +32,7 @@ Design hint:
 
 If your cart API uses a route such as `/api/cart/items/{itemId}`, that usually implies a single unique identifier for the cart line item itself. If your database instead identifies a cart line by a composite key such as `(cart_id, line_no)`, the route shape would typically need to reflect that design as well, for example `/api/carts/{cartId}/lines/{lineNo}`.
 
-## Important for trainees
+## Node & Packages
 
 This project uses modern JavaScript modules throughout the codebase.
 
@@ -131,27 +131,9 @@ eventsRouter.post("/", requireAuth, postEvent); // protected
 
 The package comes installed with SQLite, MySQL, and PostgreSQL clients because it is based on a shared template.
 
-For the Events Startup Project, PostgreSQL is the required database. You should set `DB_CLIENT=pg` and configure the remaining PostgreSQL environment variables in your `.env` file.
+For the Events Startup Project, keep the course-specific database setup in the [main README](../README.md), including the required `DB_CLIENT=pg` setting, local Docker example, and example `.env` values.
 
-Example local PostgreSQL setup with Docker:
-
-`docker run --name events-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=events_startup -d -p 5432:5432 postgres:16`
-
-Example `.env` values for that setup:
-
-```env
-PORT=3001
-
-DB_CLIENT=pg
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_DATABASE_NAME=events_startup
-DB_USE_SSL=false
-```
-
-See `.env-template` for the full list of available configuration variables.
+See `.env-template` for the full list of available configuration variables supported by this package.
 
 ## Advanced database management
 
@@ -234,7 +216,7 @@ The `db:setup` command is useful when:
 - You want to reset your local database
 - You are running the demo version of the API
 
-### Important for trainees
+### Project structure
 
 This skeleton includes a simple **MVC-style structure**:
 
