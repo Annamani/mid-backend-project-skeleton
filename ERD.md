@@ -1,14 +1,13 @@
 ## Database Schema Documentation
 
 This project uses PostgreSQL with core entities currently using users and events.
-
-Entity Relationship Diagram for users and events are updated under (<images/ERD for users and events.png>)
+The Entity Relationship Diagram for users and events is updated under ./images/ERD for users and events.png
 
 ## Core Entities
 
 # User Table
 
-Stores users information:
+Stores users' information:
 
 - id (SERIAL PRIMARY KEY) - Unique identifier
 - email (TEXT UNIQUE NOT NULL) - User email
