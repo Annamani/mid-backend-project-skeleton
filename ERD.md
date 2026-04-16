@@ -18,14 +18,14 @@ Stores users' information:
 
 Stores available events for booking/purchase:
 
-id (SERIAL PRIMARY KEY) - Unique identifier
-title (TEXT NOT NULL) - Event title
-description (TEXT) - Event description
-event_location (TEXT) - Event location
-event_date (TIMESTAMP NOT NULL) - Date and time of the event
-price (DECIMAL(10,2) NOT NULL) - Ticket price
-available_tickets (INTEGER NOT NULL) - Remaining tickets
-created_at (TIMESTAMP DEFAULT CURRENT_TIMESTAMP) - Creation timestamp
+- id (SERIAL PRIMARY KEY) - Unique identifier
+- title (TEXT NOT NULL) - Event title
+- description (TEXT) - Event description
+- event_location (TEXT) - Event location
+- event_date (TIMESTAMP NOT NULL) - Date and time of the event
+- price (DECIMAL(10,2) NOT NULL) - Ticket price
+- available_tickets (INTEGER NOT NULL) - Remaining tickets
+- created_at (TIMESTAMP DEFAULT CURRENT_TIMESTAMP) - Creation timestamp
 
 # Database Files
 
