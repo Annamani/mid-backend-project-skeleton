@@ -1,4 +1,6 @@
-.idea/
-.DS_STORE
-api/.env-template
-.vscode
+node_modules/
+.env
+.env.*
+env-template
+.vscode/
+postgres.session.sql
