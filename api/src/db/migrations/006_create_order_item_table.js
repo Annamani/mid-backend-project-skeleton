@@ -14,7 +14,7 @@ export async function up(knex) {
       .unsigned()
       .notNullable()
       .references("id")
-      .inTable("events")
+      .inTable("event")
       .onDelete("RESTRICT");
     t.string("event_title").notNullable();
     t.integer("quantity").notNullable().defaultTo(1);
