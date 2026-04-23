@@ -95,6 +95,51 @@ export async function seed(knex) {
         currency: "DKK",
         available_tickets: 150,
       },
+      {
+        id: 9,
+        title: "Rock Music Concert",
+        description:
+          "An intimate set with modern standards and originals. Live music event along with audience choice singalong.",
+        event_location:
+          "Royal Arena Copenhagen, Hannemanns Allé 18-20, 2300 København S.",
+        event_date: "2026-07-25 15:30:00",
+        price: 300,
+        currency: "DKK",
+        available_tickets: 450,
+      },
+      {
+        id: 10,
+        title: "Tech Conference",
+        description:
+          "Tech talks and networking event with many experienced people.Its a great event to have small talks and discussions to connect with people.",
+        event_location: "Bella Center, Center Boulevard 5 2300 København S",
+        event_date: "2026-07-15 09:00:00",
+        price: 150,
+        currency: "DKK",
+        available_tickets: 200,
+      },
+      {
+        id: 11,
+        title: "Telugu Stand-up Comedy",
+        description:
+          "A night of Telugu laughter, NRI life stories, and nonstop comedy—right here in Copenhagen!",
+        event_location: "Herlev Bio Theatre, Herlev",
+        event_date: "2026-10-10 19:00:00",
+        price: 100,
+        currency: "DKK",
+        available_tickets: 80,
+      },
+      {
+        id: 12,
+        title: "ITDAY Copenhagen",
+        description:
+          "Your gateway to jobs, networking, and innovation in Denmark’s biggest IT career fair.",
+        event_location: "'DGI Byen, Copenhagen",
+        event_date: "2027-03-09 10:00:00",
+        price: 0.0,
+        currency: "DKK",
+        available_tickets: 200,
+      },
     ])
     .onConflict("id")
     .merge();
