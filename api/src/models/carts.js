@@ -6,8 +6,6 @@ const CART_ITEM_TABLE = "cart_item";
 
 export async function getOrCreateCart({ userId, sessionId, trx = db }) {
   let cart;
-
-  // 1. Try find existing cart
   if (userId) {
     cart = await trx(CART_TABLE)
       .where({ user_id: userId, status: "active" })
@@ -19,15 +17,11 @@ export async function getOrCreateCart({ userId, sessionId, trx = db }) {
   }
 
   if (cart) return cart;
-
-  // 2. Create new cart
   const [cartId] = await trx(CART_TABLE).insert({
     user_id: userId ?? null,
     session_id: sessionId ?? null,
     status: "active",
   });
-
-  // 3. Return created cart safely
   return trx(CART_TABLE).where({ cart_id: cartId }).first();
 }
 
@@ -40,7 +34,6 @@ export async function addToCart(
   const event = await trx(EVENT_TABLE).where({ id: eventId }).first();
 
   if (!event) throw new Error("Event not found");
-
   // check existing item
   const existingItem = await trx(CART_ITEM_TABLE)
     .where({ cart_id: cartId, event_id: eventId })

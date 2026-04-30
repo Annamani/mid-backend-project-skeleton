@@ -26,8 +26,6 @@ export async function getCartById(req, res, next) {
 export async function postCartItem(req, res, next) {
   try {
     const { eventId, quantity = 1 } = req.body;
-
-    // 🔒 basic validation (important)
     if (!eventId) {
       return res.status(400).json({ error: "eventId is required" });
     }
@@ -36,8 +34,6 @@ export async function postCartItem(req, res, next) {
     if (Number.isNaN(qty) || qty <= 0) {
       return res.status(400).json({ error: "quantity must be > 0" });
     }
-
-    // 👇 safe identity extraction
     const userId = req.user?.id ?? null;
     const sessionId = req.sessionID ?? req.headers["x-session-id"] ?? null;
 
@@ -47,7 +43,6 @@ export async function postCartItem(req, res, next) {
       });
     }
 
-    // 👇 stable cart (NO more changing cart_id problem)
     const cart = await getOrCreateCart({ userId, sessionId });
 
     if (!cart?.cart_id) {
@@ -56,7 +51,6 @@ export async function postCartItem(req, res, next) {
       });
     }
 
-    // 👇 add item to stable cart
     const item = await addToCart(cart.cart_id, eventId, qty);
 
     res.status(201).json({
