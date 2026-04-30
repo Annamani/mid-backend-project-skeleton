@@ -2,7 +2,7 @@
  * @param {import("knex").Knex} knex
  */
 export async function seed(knex) {
-  await knex("cart_item").del(); // Clear existing users
+  await knex("cart_item").truncate(); // Clear existing users
 
   await knex("cart_item").insert([
     {

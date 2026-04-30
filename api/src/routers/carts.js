@@ -1,5 +1,5 @@
 import express from "express";
-import { getCartById } from "#controllers/carts.js";
+import { getCartById, postCartItem } from "#controllers/carts.js";
 
 const cartsRouter = express.Router();
 
@@ -8,5 +8,5 @@ const cartsRouter = express.Router();
  * This will return the items + the subtotal we calculated
  */
 cartsRouter.get("/:id", getCartById);
-
+cartsRouter.post("/cart-items", postCartItem);
 export default cartsRouter;

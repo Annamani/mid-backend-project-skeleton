@@ -3,7 +3,7 @@
  */
 export async function seed(knex) {
   // Clear existing carts
-  await knex("cart").del();
+  await knex("cart").truncate();
 
   await knex("cart").insert([
     {
