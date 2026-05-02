@@ -3,12 +3,20 @@ import {
   getOrCreateCart,
   getCartSubtotal,
   listCartItems,
+  getCartByIdRaw,
 } from "#models/carts.js";
 
 export async function getCartById(req, res, next) {
   try {
     const { id } = req.params;
-
+    //If cart does not exist
+    const cart = await getCartByIdRaw(Number(id));
+    if (!cart) {
+      return res.status(404).json({
+        error: "Cart not found",
+      });
+    }
+    //If cart does  exists
     const items = await listCartItems(Number(id));
     const subtotal = await getCartSubtotal(Number(id));
 
@@ -26,8 +34,16 @@ export async function getCartById(req, res, next) {
 export async function postCartItem(req, res, next) {
   try {
     const { eventId, quantity = 1 } = req.body;
-    if (!eventId) {
-      return res.status(400).json({ error: "eventId is required" });
+    const eventIdNum = Number(eventId);
+    if (
+      !eventId ||
+      Number.isNaN(eventIdNum) ||
+      !Number.isInteger(eventIdNum) ||
+      eventIdNum <= 0
+    ) {
+      return res.status(400).json({
+        error: "eventId must be a positive integer",
+      });
     }
 
     const qty = Number(quantity);

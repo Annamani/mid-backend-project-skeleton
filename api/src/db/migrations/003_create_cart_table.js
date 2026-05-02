@@ -16,6 +16,10 @@ export async function up(knex) {
       .defaultTo("active");
     t.timestamps(true, true);
   });
+  await knex.schema.alterTable("cart", (table) => {
+    table.unique(["user_id", "status"]);
+    table.unique(["session_id", "status"]);
+  });
 }
 
 /**

@@ -105,8 +105,7 @@ export async function getEvents(req, res, next) {
  */
 export async function getEventById(req, res, next) {
   try {
-    const { id } = EventIdParams.parse(req.params.id);
-    const event = await findEventById(id);
+    const event = await findEventById(req.params.id);
 
     if (!event) {
       return res.status(404).json({

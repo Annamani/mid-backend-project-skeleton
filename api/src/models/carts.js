@@ -4,6 +4,9 @@ const EVENT_TABLE = "event";
 const CART_TABLE = "cart";
 const CART_ITEM_TABLE = "cart_item";
 
+export async function getCartByIdRaw(cartId) {
+  return db("cart").where({ cart_id: cartId }).first();
+}
 export async function getOrCreateCart({ userId, sessionId, trx = db }) {
   let cart;
   if (userId) {

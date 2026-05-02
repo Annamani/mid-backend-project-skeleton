@@ -1,9 +1,12 @@
-const client = process.env.DB_CLIENT ?? "sqlite3";
 import path from "path";
+import { fileURLToPath } from "url";
+const client = process.env.DB_CLIENT ?? "sqlite3";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const defaultDbFilename =
   client === "sqlite3"
-    ? path.resolve(process.cwd(), "src/db/database.sqlite")
+    ? path.resolve(__dirname, "../db/database.sqlite")
     : null;
 
 export function createKnexConfig() {

@@ -14,7 +14,7 @@ export async function up(knex) {
       .unsigned()
       .notNullable()
       .references("id")
-      .inTable("events")
+      .inTable("event")
       .onDelete("CASCADE");
     t.integer("quantity").notNullable().defaultTo(1);
     t.decimal("price", 10, 2).notNullable();
