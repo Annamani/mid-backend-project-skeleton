@@ -1,13 +1,14 @@
-import db from "#configs/database.js";
+import knex from "#configs/database.js";
 
 const EVENT_TABLE = "event";
 const CART_TABLE = "cart";
 const CART_ITEM_TABLE = "cart_item";
 
 export async function getCartByIdRaw(cartId) {
-  return db("cart").where({ cart_id: cartId }).first();
+  return knex("cart").where({ cart_id: cartId }).first();
 }
-export async function getOrCreateCart({ userId, sessionId, trx = db }) {
+
+export async function getOrCreateCart({ userId, sessionId, trx = knex }) {
   let cart;
   if (userId) {
     cart = await trx(CART_TABLE)
@@ -32,7 +33,7 @@ export async function addToCart(
   cartId,
   eventId,
   quantity = 1,
-  { trx = db } = {},
+  { trx = knex } = {},
 ) {
   const event = await trx(EVENT_TABLE).where({ id: eventId }).first();
 
@@ -65,16 +66,16 @@ export async function addToCart(
   return trx(CART_ITEM_TABLE).where({ cart_item_id: itemId }).first();
 }
 
-export async function getCartSubtotal(cartId, { trx = db } = {}) {
+export async function getCartSubtotal(cartId, { trx = knex } = {}) {
   const result = await trx(CART_ITEM_TABLE)
     .where({ cart_id: cartId })
-    .select(db.raw("SUM(price * quantity) as subtotal"))
+    .select(knex.raw("SUM(price * quantity) as subtotal"))
     .first();
 
   return Number(result?.subtotal || 0);
 }
 
-export async function listCartItems(cartId, { trx = db } = {}) {
+export async function listCartItems(cartId, { trx = knex } = {}) {
   return trx(CART_ITEM_TABLE)
     .join(EVENT_TABLE, `${CART_ITEM_TABLE}.event_id`, `${EVENT_TABLE}.id`)
     .where(`${CART_ITEM_TABLE}.cart_id`, cartId)
@@ -83,6 +84,9 @@ export async function listCartItems(cartId, { trx = db } = {}) {
       `${CART_ITEM_TABLE}.quantity`,
       `${CART_ITEM_TABLE}.price`,
       `${EVENT_TABLE}.title`,
+      `${EVENT_TABLE}.id`,
+      `${EVENT_TABLE}.event_date`,
+      `${EVENT_TABLE}.event_location`,
       `${EVENT_TABLE}.currency`,
     );
 }
@@ -90,10 +94,10 @@ export async function listCartItems(cartId, { trx = db } = {}) {
 export async function debugCart(cartId) {
   console.log("DEBUGGING CART to identify the issue");
 
-  const items = await db(CART_ITEM_TABLE).where({ cart_id: cartId });
+  const items = await knex(CART_ITEM_TABLE).where({ cart_id: cartId });
   console.log("cart_item rows:", items);
 
-  const join = await db(CART_ITEM_TABLE)
+  const join = await knex(CART_ITEM_TABLE)
     .join(EVENT_TABLE, "cart_item.event_id", "event.id")
     .where({ "cart_item.cart_id": cartId });
 

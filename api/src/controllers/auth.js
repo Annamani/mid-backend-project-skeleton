@@ -62,7 +62,6 @@ export async function logIn(req, res, next) {
       JWT_SECRET,
       { expiresIn: "1h" },
     );
-    console.log("VERIFYING WITH SECRET:", JWT_SECRET);
     res.json({ token });
   } catch (err) {
     next(err);

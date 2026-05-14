@@ -8,7 +8,7 @@ export async function seed(knex) {
     {
       id: 1,
       name: "Anna Nielsen",
-      email: "'anna@hyf.dk",
+      email: "anna@hyf.dk",
       password: "mypassword1",
       created_at: new Date(),
       updated_at: new Date(),
@@ -16,7 +16,7 @@ export async function seed(knex) {
     {
       id: 2,
       name: "Lucas Mortensen",
-      email: "'lucas.mortensen@example.com",
+      email: "lucas.mortensen@example.com",
       password: "mypassword2",
       created_at: new Date(),
       updated_at: new Date(),
@@ -24,7 +24,7 @@ export async function seed(knex) {
     {
       id: 3,
       name: "Sofia Hansen",
-      email: "'sofia.hansen@testmail.com",
+      email: "sofia.hansen@testmail.com",
       password: "mypassword3",
       created_at: new Date(),
       updated_at: new Date(),

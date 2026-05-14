@@ -167,7 +167,7 @@ export async function updateCartItem(req, res, next) {
 //delete /items/:itemId
 export async function deleteCart(req, res, next) {
   try {
-    const result = cartIdSchema.safeParse(req.params);
+    const result = cartIdSchema.safeParse({ id: req.params.itemId });
     if (!result.success) {
       return res.status(400).json({
         status: "error",
@@ -176,22 +176,18 @@ export async function deleteCart(req, res, next) {
       });
     }
     const { id } = result.data;
-    // check cart exists
-    const cart = await knex("cart").where({ cart_id: id }).first();
-
-    if (!cart) {
+    // check cart item exists in cart_item table
+    const existingCart = await knex("cart_item")
+      .where({ cart_item_id: id })
+      .first();
+    if (!existingCart) {
       return res.status(404).json({
         status: "error",
-        message: "Cart not found",
+        message: "Cart item not found",
       });
     }
-
     //  delete items first from cart_items table
-    await knex("cart_item").where({ cart_id: id }).del();
-
-    // delete cart itself
-    await knex("cart").where({ cart_id: id }).del();
-
+    await knex("cart_item").where({ cart_item_id: id }).del();
     return res.json({
       status: "success",
       message: "Cart deleted successfully",

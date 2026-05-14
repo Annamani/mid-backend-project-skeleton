@@ -6,6 +6,7 @@ import {
   updateCartItem,
   deleteCart,
 } from "#controllers/carts.js";
+import { checkoutCart } from "#controllers/orders.js";
 import { authMiddleware } from "#middlewares/auth.js";
 const cartsRouter = express.Router();
 
@@ -74,7 +75,7 @@ cartsRouter.get("/:id", authMiddleware, getCartById);
  *       201:
  *         description: Item added
  */
-cartsRouter.post("/items", authMiddleware, postCartItem);
+cartsRouter.post("/items", postCartItem);
 /**
  * @swagger
  * /api/carts/items/{itemId}:
@@ -126,5 +127,5 @@ cartsRouter.put("/items/:itemId", authMiddleware, updateCartItem);
  *         description: Deleted successfully
  */
 cartsRouter.delete("/items/:itemId", authMiddleware, deleteCart);
-
+cartsRouter.post("/checkout", authMiddleware, checkoutCart);
 export default cartsRouter;

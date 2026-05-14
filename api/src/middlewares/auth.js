@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
-console.log("signing WITH SECRET:", JWT_SECRET);
 export const authMiddleware = (req, res, next) => {
   const header = req.headers.authorization;
   if (!header) {
@@ -22,4 +21,3 @@ export const authMiddleware = (req, res, next) => {
     });
   }
 };
-console.log(JWT_SECRET);
