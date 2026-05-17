@@ -4,7 +4,7 @@ import {
   getCartById,
   postCartItem,
   updateCartItem,
-  deleteCart,
+  deleteCartItem,
 } from "#controllers/carts.js";
 import { checkoutCart } from "#controllers/orders.js";
 import { authMiddleware } from "#middlewares/auth.js";
@@ -126,6 +126,34 @@ cartsRouter.put("/items/:itemId", authMiddleware, updateCartItem);
  *       200:
  *         description: Deleted successfully
  */
-cartsRouter.delete("/items/:itemId", authMiddleware, deleteCart);
+cartsRouter.delete("/items/:itemId", authMiddleware, deleteCartItem);
+/**
+ * @swagger
+ * /api/carts/checkout:
+ *   post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Cart
+ *     summary: Checkout cart and create order
+ *     responses:
+ *       201:
+ *         description: Order created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     order_id:
+ *                       type: integer
+ *                     total_amount:
+ *                       type: number
+ */
 cartsRouter.post("/checkout", authMiddleware, checkoutCart);
 export default cartsRouter;

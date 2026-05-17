@@ -165,7 +165,7 @@ export async function updateCartItem(req, res, next) {
   }
 }
 //delete /items/:itemId
-export async function deleteCart(req, res, next) {
+export async function deleteCartItem(req, res, next) {
   try {
     const result = cartIdSchema.safeParse({ id: req.params.itemId });
     if (!result.success) {

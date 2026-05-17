@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET is not defined");
+}
 export const authMiddleware = (req, res, next) => {
   const header = req.headers.authorization;
-  if (!header) {
+  if (!header || !header.startsWith("Bearer ")) {
     return res.status(401).json({
       status: "error",
-      message: "No token provided",
+      message: "Authorization token missing or invalid",
     });
   }
   const token = header.split(" ")[1];
