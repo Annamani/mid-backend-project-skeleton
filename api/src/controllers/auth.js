@@ -5,7 +5,9 @@ import knex from "#configs/database.js";
 import z from "zod";
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET is not defined");
+}
 const router = express.Router();
 //SignUp Schema
 const signupSchema = z.object({
@@ -51,7 +53,7 @@ export async function logIn(req, res, next) {
     const { email, password } = parsed.data;
     const user = await knex("users").where({ email }).first();
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Invalid credentials" });
     }
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {

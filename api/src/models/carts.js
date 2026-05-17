@@ -10,6 +10,9 @@ export async function getCartByIdRaw(cartId) {
 
 export async function getOrCreateCart({ userId, sessionId, trx = knex }) {
   let cart;
+  if (!userId && !sessionId) {
+    throw new Error("sessionId is required for guest carts");
+  }
   if (userId) {
     cart = await trx(CART_TABLE)
       .where({ user_id: userId, status: "active" })
@@ -60,7 +63,7 @@ export async function addToCart(
     cart_id: cartId,
     event_id: eventId,
     quantity,
-    price: event.price,
+    price_snapshot: event.price,
   });
 
   return trx(CART_ITEM_TABLE).where({ cart_item_id: itemId }).first();
@@ -69,7 +72,7 @@ export async function addToCart(
 export async function getCartSubtotal(cartId, { trx = knex } = {}) {
   const result = await trx(CART_ITEM_TABLE)
     .where({ cart_id: cartId })
-    .select(knex.raw("SUM(price * quantity) as subtotal"))
+    .select(knex.raw("SUM(price_snapshot * quantity) as subtotal"))
     .first();
 
   return Number(result?.subtotal || 0);
@@ -82,24 +85,11 @@ export async function listCartItems(cartId, { trx = knex } = {}) {
     .select(
       `${CART_ITEM_TABLE}.cart_item_id`,
       `${CART_ITEM_TABLE}.quantity`,
-      `${CART_ITEM_TABLE}.price`,
+      `${CART_ITEM_TABLE}.price_snapshot`,
       `${EVENT_TABLE}.title`,
       `${EVENT_TABLE}.id`,
       `${EVENT_TABLE}.event_date`,
       `${EVENT_TABLE}.event_location`,
       `${EVENT_TABLE}.currency`,
     );
-}
-
-export async function debugCart(cartId) {
-  console.log("DEBUGGING CART to identify the issue");
-
-  const items = await knex(CART_ITEM_TABLE).where({ cart_id: cartId });
-  console.log("cart_item rows:", items);
-
-  const join = await knex(CART_ITEM_TABLE)
-    .join(EVENT_TABLE, "cart_item.event_id", "event.id")
-    .where({ "cart_item.cart_id": cartId });
-
-  console.log("JOIN result:", join);
 }

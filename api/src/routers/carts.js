@@ -4,7 +4,7 @@ import {
   getCartById,
   postCartItem,
   updateCartItem,
-  deleteCart,
+  deleteCartItem,
 } from "#controllers/carts.js";
 import { checkoutCart } from "#controllers/orders.js";
 import { authMiddleware } from "#middlewares/auth.js";
@@ -144,7 +144,7 @@ cartsRouter.put("/items/:itemId", authMiddleware, updateCartItem);
  *       404:
  *         description: Item not found
  */
-cartsRouter.delete("/items/:itemId", authMiddleware, deleteCart);
+cartsRouter.delete("/items/:itemId", authMiddleware, deleteCartItem);
 /**
  * @swagger
  * /api/carts/checkout:
