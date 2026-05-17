@@ -8,4 +8,10 @@ apiRouter.use("/auth", authRouter);
 apiRouter.use("/events", eventsRouter);
 apiRouter.use("/carts", cartsRouter);
 apiRouter.use("/orders", orderRouter);
+apiRouter.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    message: "API is running ",
+  });
+});
 export default apiRouter;
