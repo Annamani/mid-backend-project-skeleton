@@ -11,11 +11,6 @@ import { authMiddleware } from "#middlewares/auth.js";
 const cartsRouter = express.Router();
 
 /**
- * GET /api/carts/:id
- * This will return the items + the subtotal we calculated
- *
- */
-/**
  * @swagger
  * /api/carts:
  *   get:
@@ -23,10 +18,27 @@ const cartsRouter = express.Router();
  *       - bearerAuth: []
  *     tags:
  *       - Cart
- *     summary: Get user cart
+ *     summary: Get current user cart
  *     responses:
  *       200:
  *         description: Cart retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     cartId:
+ *                       type: integer
+ *                     items:
+ *                       type: array
+ *                     subtotal:
+ *                       type: number
  */
 cartsRouter.get("/", authMiddleware, getCart);
 /**
@@ -37,7 +49,7 @@ cartsRouter.get("/", authMiddleware, getCart);
  *       - bearerAuth: []
  *     tags:
  *       - Cart
- *     summary: Get cart by id
+ *     summary: Get cart by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -47,6 +59,8 @@ cartsRouter.get("/", authMiddleware, getCart);
  *     responses:
  *       200:
  *         description: Cart details
+ *       404:
+ *         description: Cart not found
  */
 cartsRouter.get("/:id", authMiddleware, getCartById);
 /**
@@ -71,11 +85,12 @@ cartsRouter.get("/:id", authMiddleware, getCartById);
  *                 type: integer
  *               quantity:
  *                 type: integer
+ *                 example: 1
  *     responses:
- *       201:
- *         description: Item added
+ *       200:
+ *         description: Item added successfully
  */
-cartsRouter.post("/items", postCartItem);
+cartsRouter.post("/items", authMiddleware, postCartItem);
 /**
  * @swagger
  * /api/carts/items/{itemId}:
@@ -102,9 +117,10 @@ cartsRouter.post("/items", postCartItem);
  *             properties:
  *               quantity:
  *                 type: integer
+ *                 example: 2
  *     responses:
  *       200:
- *         description: Updated successfully
+ *         description: Item updated successfully
  */
 cartsRouter.put("/items/:itemId", authMiddleware, updateCartItem);
 /**
@@ -124,7 +140,9 @@ cartsRouter.put("/items/:itemId", authMiddleware, updateCartItem);
  *           type: integer
  *     responses:
  *       200:
- *         description: Deleted successfully
+ *         description: Item deleted successfully
+ *       404:
+ *         description: Item not found
  */
 cartsRouter.delete("/items/:itemId", authMiddleware, deleteCartItem);
 /**
@@ -156,4 +174,5 @@ cartsRouter.delete("/items/:itemId", authMiddleware, deleteCartItem);
  *                       type: number
  */
 cartsRouter.post("/checkout", authMiddleware, checkoutCart);
+
 export default cartsRouter;
