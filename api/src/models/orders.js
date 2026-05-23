@@ -1,28 +1,30 @@
 import { checkoutCart } from "#controllers/orders.js";
 import knex from "#configs/database.js";
 export async function createOrder(trx, userId, totalAmount, cartId) {
-  //   if (!userId) throw new Error("userId missing");
-  //   if (!totalAmount) throw new Error("totalAmount missing");
-  //   if (!cartId) throw new Error("cartId missing");
-  //   console.log(userId, totalAmount, cartId);
-  const [order] = await trx("customer_order")
-    .insert({
-      user_id: userId,
-      total_amount: totalAmount ?? 0,
-      cart_id: cartId,
-    })
-    .returning("*");
+  const [orderId] = await trx("customer_order").insert({
+    user_id: userId,
+    total_amount: totalAmount ?? 0,
+    cart_id: cartId,
+  });
+
+  const order = await trx("customer_order")
+    .where({ order_id: orderId })
+    .first();
+
   return order;
 }
 export async function createOrderItems(trx, orderId, cartItems) {
-  console.log("CART ITEMS:", cartItems);
   const items = cartItems.map((item) => ({
     order_id: orderId,
-    event_id: item.id,
+    event_id: item.event_id ?? item.id,
     event_title: item.title,
     quantity: item.quantity,
-    price: item.price,
+    price: item.price_snapshot,
   }));
+
+  if (!items.length) {
+    return [];
+  }
 
   return trx("order_item").insert(items);
 }

@@ -131,7 +131,7 @@ export async function updateCartItem(req, res, next) {
   try {
     // validate params + body together
     const parsed = updateCartItemSchema.safeParse({
-      id: req.params.id,
+      id: req.params.itemId,
       quantity: req.body.quantity,
     });
     if (!parsed.success) {
@@ -143,7 +143,9 @@ export async function updateCartItem(req, res, next) {
     }
     const { id, quantity } = parsed.data;
     // check if item exists
-    const existing = await knex("cart_items").where({ id }).first();
+    const existing = await knex("cart_item")
+      .where({ cart_item_id: id })
+      .first();
     if (!existing) {
       return res.status(404).json({
         status: "error",
@@ -152,10 +154,7 @@ export async function updateCartItem(req, res, next) {
     }
 
     // update item
-    const [updated] = await knex("cart_items")
-      .where({ id })
-      .update({ quantity })
-      .returning("*");
+    const [updated] = await knex("cart_item").where({ cart_item_id: id });
     res.json({
       status: "success",
       data: updated,
