@@ -9,8 +9,6 @@ const defaultDbFilename =
     ? path.resolve(__dirname, "../db/database.sqlite")
     : null;
 export function createKnexConfig() {
-  const isProduction = process.env.NODE_ENV === "production";
-
   return {
     client,
     connection: {

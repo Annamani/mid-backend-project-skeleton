@@ -15,15 +15,6 @@ const swaggerOptions = {
       version: process.env.APP_VERSION ?? "1.0.0",
       description: "API documentation",
     },
-    servers: [
-      {
-        url:
-          process.env.NODE_ENV === "production"
-            ? "https://mid-backend-project-skeleton-qo84.onrender.com"
-            : "http://localhost:3000",
-      },
-    ],
-
     components: {
       securitySchemes: {
         bearerAuth: {
