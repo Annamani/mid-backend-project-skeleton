@@ -12,8 +12,22 @@ const swaggerOptions = {
     openapi: "3.0.0",
     info: {
       title: process.env.APP_NAME ?? "Backend-Mid-Specialism",
-      version: process.env.APP_VERSION ?? "0.0.1",
+      version: process.env.APP_VERSION ?? "1.0.0",
       description: "API documentation",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
     },
   },
   apis: ["./src/routers/**/*.js", "./src/routers/*.js"],
@@ -26,18 +40,9 @@ const swaggerOptions = {
  * Ensures that every route still appears in Swagger UI.
  */
 const openApiEndpointSpecStub = {
-  tags: ["Auto-generated"],
-  summary: "Auto generated endpoint (no docs)",
+  tags: ["Undocumented"],
   responses: {
-    200: {
-      description: "Success response (not documented)",
-    },
-    400: {
-      description: "Bad request",
-    },
-    500: {
-      description: "Server error",
-    },
+    200: { description: "OK" },
   },
 };
 
