@@ -17,7 +17,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://mid-backend-project-skeleton-qo84.onrender.com",
       },
     ],
     components: {
