@@ -7,4 +7,4 @@ src/db/*.sqlite
 src/db/*.db
 .env
 .env.*
-env-template
+.env-template
