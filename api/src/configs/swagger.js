@@ -17,9 +17,13 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "https://mid-backend-project-skeleton-qo84.onrender.com",
+        url:
+          process.env.NODE_ENV === "production"
+            ? "https://mid-backend-project-skeleton-qo84.onrender.com"
+            : "http://localhost:3000",
       },
     ],
+
     components: {
       securitySchemes: {
         bearerAuth: {
