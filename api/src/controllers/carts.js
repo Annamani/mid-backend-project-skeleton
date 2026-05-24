@@ -129,7 +129,7 @@ export async function postCartItem(req, res, next) {
 //put cart -- /items/:itemId
 export async function updateCartItem(req, res, next) {
   try {
-    // validate params + body together
+    // validate params body together
     const parsed = updateCartItemSchema.safeParse({
       id: req.params.itemId,
       quantity: req.body.quantity,
@@ -154,8 +154,12 @@ export async function updateCartItem(req, res, next) {
     }
 
     // update item
-    const [updated] = await knex("cart_item").where({ cart_item_id: id });
-    res.json({
+    const [updated] = await knex("cart_item")
+      .where({ cart_item_id: id })
+      .update({ quantity })
+      .returning("*");
+
+    return res.json({
       status: "success",
       data: updated,
     });

@@ -3,7 +3,7 @@ import knex from "#configs/database.js";
 export async function createOrder(trx, userId, totalAmount, cartId) {
   const [orderId] = await trx("customer_order").insert({
     user_id: userId,
-    total_amount: totalAmount ?? 0,
+    total_amount: totalAmount,
     cart_id: cartId,
   });
 

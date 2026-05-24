@@ -38,6 +38,7 @@ export async function checkoutCart(req, res, next) {
       });
     }
     const subtotal = await getCartSubtotal(cart.cart_id);
+    //console.log(subtotal);
     const order = await knex.transaction(async (trx) => {
       const newOrder = await createOrder(trx, userId, subtotal, cart.cart_id);
       // prepare order items
